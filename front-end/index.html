@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best-Performing Student Recognition System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table th,
+        table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .form-container,
+        .login-container {
+            margin-top: 40px;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        form input[type="text"],
+        form input[type="number"],
+        form input[type="password"],
+        form select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        form input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Top Performing Students</h1>
+
+        <!-- Table displaying existing students -->
+        <div class="top-students">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>GPA</th>
+                        <th>Consistency</th>
+                        <th>Core Courses GPA</th>
+                        <th>Local Hackathons</th>
+                        <th>National Hackathons</th>
+                        <th>Paper Presentations</th>
+                        <th>Peer Assistance</th>
+                        <th>Ranking Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example Data - Replace with dynamic data -->
+                    <tr>
+                        <td>STU2024_01</td>
+                        <td>3.95</td>
+                        <td>Consistent</td>
+                        <td>3.90</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>3</td>
+                        <td>5</td>
+                        <td>9.45</td>
+                    </tr>
+                    <tr>
+                        <td>STU2024_02</td>
+                        <td>3.88</td>
+                        <td>Improving</td>
+                        <td>3.85</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>6</td>
+                        <td>9.30</td>
+                    </tr>
+                    <tr>
+                        <td>STU2024_03</td>
+                        <td>3.92</td>
+                        <td>Consistent</td>
+                        <td>3.89</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>4</td>
+                        <td>9.28</td>
+                    </tr>
+                    <!-- End of Example Data -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Administrator login form -->
+        <div class="login-container">
+            <h2>Administrator Login</h2>
+            <form action="/login" method="POST">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+
+                <input type="submit" value="Login">
+            </form>
+        </div>
+
+        <!-- Administrator input form (restricted to logged-in users) -->
+        {% if session['logged_in'] %}
+        <div class="form-container">
+            <h2>Enter Student Results</h2>
+            <form action="/add_student" method="POST">
+                <label for="student_id">Student ID</label>
+                <input type="text" id="student_id" name="student_id" required>
+
+                <label for="gpa">GPA</label>
+                <input type="number" step="0.01" id="gpa" name="gpa" required>
+
+                <label for="consistency">Consistency</label>
+                <select id="consistency" name="consistency">
+                    <option value="Consistent">Consistent</option>
+                    <option value="Improving">Improving</option>
+                    <option value="Declining">Declining</option>
+                </select>
+
+                <label for="core_gpa">Core Courses GPA</label>
+                <input type="number" step="0.01" id="core_gpa" name="core_gpa" required>
+
+                <label for="local_hackathons">Local Hackathons</label>
+                <input type="number" id="local_hackathons" name="local_hackathons" required>
+
+                <label for="national_hackathons">National Hackathons</label>
+                <input type="number" id="national_hackathons" name="national_hackathons" required>
+
+                <label for="paper_presentations">Paper Presentations</label>
+                <input type="number" id="paper_presentations" name="paper_presentations" required>
+
+                <label for="peer_assistance">Peer Assistance</label>
+                <input type="number" id="peer_assistance" name="peer_assistance" required>
+
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+
+        <a href="/logout" class="btn-back">Logout</a>
+        {% else %}
+        <p>You must be logged in as an administrator to submit student results.</p>
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
